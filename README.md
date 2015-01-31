@@ -17,3 +17,5 @@ View your Github followings' pushes, in one place.
 3. `node app.js` and go to `http://localhost:6974`.
   You can change the port by `PORT=25252 node app.js`.
 4. Enjoy!
+
+Also, you can view other person's timeline by `http://localhost:6974/other-person-s-username`
