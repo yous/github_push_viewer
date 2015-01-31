@@ -2,10 +2,10 @@ var express=require('express'),
 	morgan=require('morgan'),
 	jade=require('jade'),
 	sjc=require(__dirname+'/sjc.js'),
-	request=require('request')
+	request=require('request'),
+	config=require(__dirname+'/config.json')
 
 const githubapi='https://api.github.com/'
-const your_token='YOUR_TOKEN_HERE'
 
 var SUPER='/_/'
 var app=express()
@@ -51,7 +51,7 @@ function get(api, callback){
 		'json': true,
 		'headers': {
 			'User-Agent': 'ReadOnly',
-			'Authorization': 'token '+your_token
+			'Authorization': 'token '+config.token
 		}
 	}, callback)
 }

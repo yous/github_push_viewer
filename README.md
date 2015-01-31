@@ -7,6 +7,12 @@ View your Github followings' pushes, in one place.
 
 ## Installation
 1. Go to Github [Settings > Applications > Personal access tokens](https://github.com/settings/applications) and generate a read only token.
-2. Fill your token in `const your_token='YOUR_TOKEN_HERE'` in [/app.js](/app.js)
-3. `node app.js` and go to `http://localhost:6974`. You can change the port by `PORT=25252 node app.js`.
+2. Add `config.json`:
+```json
+{
+	"token": "YOUR_TOKEN_HERE"
+}
+```
+3. `node app.js` and go to `http://localhost:6974`.
+  You can change the port by `PORT=25252 node app.js`.
 4. Enjoy!
