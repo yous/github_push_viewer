@@ -48,6 +48,11 @@ function get(api, callback){
 
 function afterGetFollowing(res){
 	return function(e, r, d){
+		if(!(d instanceof Array)){
+			if(typeof d.message==='string' && d.message.toLowerCase()==='not found') res.sendStatus(404).end()
+			else res.sendStatus(500).end()
+			return
+		}
 		var q=[], p=[]
 		var arr=d.filter(function(v){return v.type.toLowerCase()==='user'});
 		for(var i=0; i<arr.length; ++i) q.push(1)
