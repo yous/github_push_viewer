@@ -10,6 +10,7 @@ View your Github followings' pushes, in one place.
 2. Add `config.json`:
 ```json
 {
+	"appname": "YOUR_APPLICATION_NAME_OR_USERNAME",
 	"token": "YOUR_TOKEN_HERE"
 }
 ```

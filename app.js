@@ -12,24 +12,14 @@ var app=express()
 	.use(morgan('dev'))
 	.set('port', process.env.PORT|6974)
 	.use(SUPER, sjc)
+
 app.get('/', function(req, res){
-	get('user/following', function(e, r, d){
-		var q=[], p=[]
-		var arr=d.filter(function(v){return v.type.toLowerCase()==='user'});
-		for(var i=0; i<arr.length; ++i) q.push(1)
-		arr.forEach(function(v, i){
-			get('users/'+v.login+'/events', function(e, r, d){
-				q[i]=0
-				p=p.concat(d)
-				if(q.indexOf(1)===-1) finish()
-			})
-		})
-		function finish(){
-			q=null
-			render(res, './v/index.jade', {'SUPER': SUPER, 'data': p})
-		}
-	})
+	get('user/following', afterGetFollowing(res))
 })
+app.get(/^\/([a-z-]+)/i, function(req, res){
+	get('users/'+req.params[0]+'/following', afterGetFollowing(res))
+})
+
 app.listen(app.get('port'))
 
 function render(res, path, options){
@@ -50,8 +40,27 @@ function get(api, callback){
 		'url': githubapi+api,
 		'json': true,
 		'headers': {
-			'User-Agent': 'ReadOnly',
+			'User-Agent': config.appname,
 			'Authorization': 'token '+config.token
 		}
 	}, callback)
+}
+
+function afterGetFollowing(res){
+	return function(e, r, d){
+		var q=[], p=[]
+		var arr=d.filter(function(v){return v.type.toLowerCase()==='user'});
+		for(var i=0; i<arr.length; ++i) q.push(1)
+		arr.forEach(function(v, i){
+			get('users/'+v.login+'/events', function(e, r, d){
+				q[i]=0
+				p=p.concat(d)
+				if(q.indexOf(1)===-1) finish()
+			})
+		})
+		function finish(){
+			q=null
+			render(res, './v/index.jade', {'SUPER': SUPER, 'data': p})
+		}
+	}
 }
