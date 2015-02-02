@@ -6,7 +6,6 @@ var router=require('express').Router(),
 	nib=require('nib')(),
 	coffee=require('coffee-script')
 router.get(/^\/([\w/]+)\.(\w+)/, function(req, res){
-	console.log(req.params[0]+" "+req.params[1])
 	var rqfn=req.params[0]
 	switch(req.params[1]){
 		case 'styl':
