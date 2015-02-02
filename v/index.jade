@@ -1,41 +1,11 @@
-mixin cnt(v)
-	case v.type.replace(/Event$/, '')
-		when 'Push'
-			- var repo=v.repo, user=v.actor
-			li.push
-				img.user_icon(src=user.avatar_url)
-				span.explain
-					a.login(href="https://github.com/"+user.login)=user.login
-					| &nbsp;pushed to&nbsp;
-					a.repo(href="https://github.com/"+repo.name)=repo.name.replace(new RegExp('^'+user.login+'/'), '/')
-				span.body
-					ul
-						each c in v.payload.commits
-							li
-								a.sha(href="https://github.com/"+repo.name+'/commit/'+c.sha)=c.sha.substring(0, 10)
-								| &nbsp;&nbsp;
-								- var msg=c.message.trim().split('\n')
-								if msg.length===1
-									span.commit_head=msg[0]
-								else
-									details
-										summary.commit_head=msg.shift()
-										p
-											- if(msg[0].trim()==='') msg.shift()
-											each m in msg
-												=m
-												br
-				time(datetime=v.created_at)
-
-
 - data=data.filter(function(v){return v.type==='PushEvent'}).sort(function(a, b){return new Date(b.created_at).getTime()-new Date(a.created_at).getTime()})
 doctype html
 head
 	meta(charset='utf-8')
 	meta(name="viewport", content="width=device-width, initial-scale=1")
 	link(href=SUPER+'index.styl', type='text/css', rel='stylesheet')
+	script(src="http://fb.me/react-0.12.2.min.js")
+	script!="var data="+JSON.stringify(data)
 body
-	main
-		ul#activity
-			each v in data
-				+cnt(v)
+	main#main
+	script(src=SUPER+'index.js')
