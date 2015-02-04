@@ -68,7 +68,6 @@ function afterGetFollowing(res){
 				})
 		}()
 		function getEvents(){
-			console.log(arr.length)
 			var q=[], p=[]
 			for(var i=0; i<arr.length; ++i) q.push(1)
 			arr.forEach(function(v, i){
