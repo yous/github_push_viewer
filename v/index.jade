@@ -8,6 +8,7 @@ mixin cnt(v)
 					a.login(href="https://github.com/"+user.login)=user.login
 					| &nbsp;pushed to&nbsp;
 					a.repo(href="https://github.com/"+repo.name)=repo.name.replace(new RegExp('^'+user.login+'/'), '/')
+					time(datetime=v.created_at)=timeago(new Date(v.created_at))
 				span.body
 					ul
 						each c in v.payload.commits
@@ -25,7 +26,6 @@ mixin cnt(v)
 											each m in msg
 												=m
 												br
-				time(datetime=v.created_at)
 
 
 - data=data.filter(function(v){return v.type==='PushEvent'}).sort(function(a, b){return new Date(b.created_at).getTime()-new Date(a.created_at).getTime()})

@@ -3,6 +3,7 @@ var express=require('express'),
 	jade=require('jade'),
 	sjc=require(__dirname+'/sjc.js'),
 	request=require('request'),
+	timeago=require('timeago'),
 	config=require(__dirname+'/config.json')
 
 const githubapi='https://api.github.com/'
@@ -79,7 +80,7 @@ function afterGetFollowing(res){
 			})
 			function finish(){
 				q=null
-				render(res, './v/index.jade', {'SUPER': SUPER, 'data': p})
+				render(res, './v/index.jade', {'SUPER': SUPER, 'data': p, 'timeago': timeago})
 			}
 		}
 	}
